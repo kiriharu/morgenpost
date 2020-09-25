@@ -15,3 +15,11 @@ QIWI_CROSS_RATES = [("643", "978"), ("643", "840")]
 WEATHERSTACK_API_KEY = ""
 # имена локаций через запятую, на англицком
 WEATHERSTACK_LOCATIONS = ["Moscow", "Minsk"]
+
+# Количество записей на каждую RSS ленту
+RSS_MAX_ENTRIES = 5
+# RSS ленты вида (название, линк)
+RSS_FEEDS = [
+    ("Новости с Яндекса", "https://news.yandex.ru/world.rss"),
+    ("Новости с Opennet", "https://www.opennet.ru/opennews/opennews_all_utf.rss"),
+]

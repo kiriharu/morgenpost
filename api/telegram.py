@@ -12,7 +12,14 @@ class Telegram:
         url = f"{self.api_url}/bot{self.token}/{method}"
         return requests.get(url, params).json()
 
-    def send_message(self, chat_id: Union[str, int], text: str) -> None:
-        self.call("sendMessage", params=dict(
-            chat_id=chat_id, text=text
+    def send_message(self, chat_id: Union[str, int], text: str) -> dict:
+        return self.call("sendMessage", params=dict(
+            chat_id=chat_id, text=text, parse_mode="Markdown"
         ))
+
+    def send(self, chat_id: Union[str, int], text: str) -> None:
+        if len(text) > 4096:
+            for x in range(0, len(text), 4096):
+                self.send_message(chat_id, text[x:x+4096])
+        else:
+            self.send_message(chat_id, text)
