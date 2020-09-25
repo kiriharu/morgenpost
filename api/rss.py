@@ -1,7 +1,7 @@
 import feedparser
 import requests
 from dataclasses import dataclass
-from config import RSS_MAX_ENTRIES
+from config import config
 
 
 @dataclass
@@ -23,7 +23,7 @@ class RSS:
         news_objects = []
 
         feed = feedparser.parse(self.feed)
-        for field in feed['entries'][0:RSS_MAX_ENTRIES]:
+        for field in feed['entries'][0:config.RSS_MAX_ENTRIES]:
             news_objects.append(NewsObj(
                 link=field.get('link'),
                 title=field.get('title', 'invalid title')
