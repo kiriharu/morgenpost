@@ -16,6 +16,10 @@ WEATHERSTACK_API_KEY = ""
 # имена локаций через запятую, на англицком
 WEATHERSTACK_LOCATIONS = ["Moscow", "Minsk"]
 
+# имена локаций, любой Unicode язык
+# если пусто: модуль выключается
+WTTRIN_LOCATIONS = ["Москва", "Берлин"]
+
 # Количество записей на каждую RSS ленту
 RSS_MAX_ENTRIES = 5
 # RSS ленты вида (название, линк)
