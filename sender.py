@@ -4,16 +4,18 @@ message_to_send = ""
 message_to_send += STARTING_MESSAGE
 
 if WEATHERSTACK_API_KEY:
-    message_to_send += "☀️Погода сейчас: \n"
+    message_to_send += "☀️Погода сейчас: \n\n"
     weather_api = weatherstack.WeatherStack(WEATHERSTACK_API_KEY)
     for location in WEATHERSTACK_LOCATIONS:
         message_to_send += weather_api.get_basic_info(location)
+    message_to_send += "\n"
 
 if QIWI_TOKEN:
-    message_to_send += "🥝Курс в обменнике Qiwi: \n"
+    message_to_send += "🥝Курс в обменнике Qiwi: \n\n"
     qiwi_api = qiwi.Qiwi(QIWI_TOKEN)
     for crossrate in QIWI_CROSS_RATES:
         message_to_send += qiwi_api.get_cross_rate(*crossrate)
+    message_to_send += "\n"
 
 if TELEGRAM_API_TOKEN:
     tg = telegram.Telegram(TELEGRAM_API_TOKEN)

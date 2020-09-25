@@ -14,8 +14,8 @@ class WeatherBasicInfo:
 
     def __str__(self) -> str:
         return f"{self.name} : {self.weather_descriptions}\n" \
-               f"🌡{self.temperature}, ощущается как {self.feelslike}\n" \
-               f"💨{self.wind_speed}, дав. {self.pressure}, 💧 {self.humidity}%\n"
+               f"🌡{self.temperature}°C, ощущается как {self.feelslike}°C\n" \
+               f"💨{self.wind_speed}, 💧{self.humidity}%, ⬇️ {self.pressure}\n"
 
 
 class WeatherStack:

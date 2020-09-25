@@ -18,7 +18,7 @@ class CrossRate:
     rate: float
 
     def __str__(self) -> str:
-        return f"За 1 {replace_by_name(self.to)} дают {replace_by_name(self.from_e)} {self.rate}\n"
+        return f"💰 За 1 {replace_by_name(self.to)} дают {replace_by_name(self.from_e)} {self.rate}\n"
 
 
 class Qiwi:
