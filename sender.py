@@ -1,5 +1,7 @@
 from config import *
-from api import weatherstack, qiwi, telegram, rss
+from api import weatherstack, qiwi, telegram, rss, wttr_in
+
+
 message_to_send = ""
 message_to_send += STARTING_MESSAGE
 
@@ -9,6 +11,12 @@ if WEATHERSTACK_API_KEY:
     for location in WEATHERSTACK_LOCATIONS:
         message_to_send += weather_api.get_basic_info(location)
     message_to_send += "\n"
+
+if WTTRIN_LOCATIONS:
+    message_to_send += "☀️Погода сейчас: \n\n"
+    for location in WTTRIN_LOCATIONS:
+        message_to_send += wttr_in.WttrIn(location).get_basic_info()
+        message_to_send += "\n"
 
 if QIWI_TOKEN:
     message_to_send += "🥝Курс в обменнике Qiwi: \n\n"
