@@ -30,7 +30,7 @@ if QIWI_TOKEN:
 
 
 if RBC_CROSS_RATES:
-    message_to_send += "🥝Курс валют РБК: \n\n"
+    message_to_send += "🏦Курс валют РБК: \n\n"
     message_to_send += rbc_valutes.RbcValutes(RBC_CROSS_RATES).get_cross_rates()
     message_to_send += "\n"
 
