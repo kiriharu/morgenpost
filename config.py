@@ -24,6 +24,13 @@ WEATHERSTACK_LOCATIONS = ["Moscow", "Minsk"]
 # если пусто: модуль выключается
 WTTRIN_LOCATIONS = ["Москва", "Берлин"]
 
+# COVID19 информация по странам
+# Названия стран брать из https://coronavirus-19-api.herokuapp.com/ -> Countries
+COVID_COUNTRIES = ["Russia", "India", "Brazil"]
+# Режим работы: расширенный "EXTENDED" или краткий "SHORT"
+# По умолчанию: EXTENDED
+COVID_MODE = "SHORT"
+
 # Количество записей на каждую RSS ленту
 RSS_MAX_ENTRIES = 5
 # RSS ленты вида (название, линк)

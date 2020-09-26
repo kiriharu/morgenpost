@@ -1,5 +1,5 @@
 from config import *
-from api import weatherstack, qiwi, telegram, rss, wttr_in, rbc_valutes
+from api import weatherstack, qiwi, telegram, rss, wttr_in, rbc_valutes, covid19
 
 
 message_to_send = ""
@@ -32,6 +32,15 @@ if QIWI_TOKEN:
 if RBC_CROSS_RATES:
     message_to_send += "🏦Курс валют РБК: \n\n"
     message_to_send += rbc_valutes.RbcValutes(RBC_CROSS_RATES).get_cross_rates()
+    message_to_send += "\n"
+
+
+if COVID_COUNTRIES:
+    message_to_send += "🦠Статистика по коронавирусу: \n\n"
+    if COVID_MODE:
+        message_to_send += covid19.Covid19(COVID_COUNTRIES, COVID_MODE).get_covid_info()
+    else:
+        message_to_send += covid19.Covid19(COVID_COUNTRIES, "EXTENDED").get_covid_info()
     message_to_send += "\n"
 
 
