@@ -14,7 +14,7 @@ class WttrInInfo:
     visibility: str
     wind_speed: str
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"🏙 {self.city}, " \
                f"{self.weather.lower()}\n" \
                f"🌡{self.temperature}°C, ощущается как {self.feels_like_C}°C, " \
@@ -30,7 +30,7 @@ class WttrIn:
         self.city: str = city
         self.url: str = f"https://wttr.in/{city}?0&format=j1&lang=ru&m&M"
 
-    def get_basic_info(self):
+    def get_basic_info(self) -> str:
         result = ((requests.get(self.url).json())['current_condition'])[0]
         return str(WttrInInfo(
             city=self.city,
