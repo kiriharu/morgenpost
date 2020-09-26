@@ -2,7 +2,8 @@ from config import *
 from api import (
     weatherstack, qiwi, telegram,
     rss, wttr_in, rbc_valutes,
-    covid19, btc_rates)
+    covid19, btc_rates
+)
 
 
 message_to_send = ""
