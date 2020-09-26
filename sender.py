@@ -1,9 +1,10 @@
 from config import *
-from api import weatherstack, qiwi, telegram, rss, wttr_in
+from api import weatherstack, qiwi, telegram, rss, wttr_in, rbc_valutes
 
 
 message_to_send = ""
 message_to_send += STARTING_MESSAGE
+
 
 if WEATHERSTACK_API_KEY:
     message_to_send += "☀️Погода сейчас: \n\n"
@@ -12,11 +13,13 @@ if WEATHERSTACK_API_KEY:
         message_to_send += weather_api.get_basic_info(location)
     message_to_send += "\n"
 
+
 if WTTRIN_LOCATIONS:
     message_to_send += "☀️Погода сейчас: \n\n"
     for location in WTTRIN_LOCATIONS:
         message_to_send += wttr_in.WttrIn(location).get_basic_info()
         message_to_send += "\n"
+
 
 if QIWI_TOKEN:
     message_to_send += "🥝Курс в обменнике Qiwi: \n\n"
@@ -24,6 +27,13 @@ if QIWI_TOKEN:
     for crossrate in QIWI_CROSS_RATES:
         message_to_send += qiwi_api.get_cross_rate(*crossrate)
     message_to_send += "\n"
+
+
+if RBC_CROSS_RATES:
+    message_to_send += "🥝Курс валют РБК: \n\n"
+    message_to_send += rbc_valutes.RbcValutes(RBC_CROSS_RATES).get_cross_rates()
+    message_to_send += "\n"
+
 
 if RSS_MAX_ENTRIES > 0 and len(RSS_FEEDS) > 0:
     for feed_params in RSS_FEEDS:
