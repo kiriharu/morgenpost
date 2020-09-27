@@ -1,6 +1,9 @@
 import requests
 from dataclasses import dataclass
 
+from zope.interface import implementer
+
+from .interfaces import IApi
 
 @dataclass
 class WeatherBasicInfo:
@@ -18,8 +21,8 @@ class WeatherBasicInfo:
                f"💨{self.wind_speed}, 💧{self.humidity}%, ⬇️ {self.pressure}\n"
 
 
+@implementer(IApi)
 class WeatherStack:
-
     url = "http://api.weatherstack.com/current"
 
     def __init__(self, access_key: str):
@@ -39,7 +42,7 @@ class WeatherStack:
             raise Exception(result["error"])
         return result
 
-    def get_basic_info(self, target: str) -> str:
+    def get_info(self, target: str) -> str:
         query = dict(query=target)
         response = self.call(query)
         return str(WeatherBasicInfo(

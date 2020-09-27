@@ -1,6 +1,10 @@
 from dataclasses import dataclass
 import requests
 
+from zope.interface import implementer
+
+from .interfaces import IApi
+
 
 @dataclass
 class WttrInInfo:
@@ -25,12 +29,13 @@ class WttrInInfo:
                f"☁{self.cloudcover}\n"
 
 
+@implementer(IApi)
 class WttrIn:
     def __init__(self, city):
         self.city: str = city
         self.url: str = f"https://wttr.in/{city}?0&format=j1&lang=ru&m&M"
 
-    def get_basic_info(self) -> str:
+    def get_info(self) -> str:
         result = ((requests.get(self.url).json())['current_condition'])[0]
         return str(WttrInInfo(
             city=self.city,

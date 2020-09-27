@@ -2,6 +2,10 @@ from typing import List
 import requests
 from dataclasses import dataclass
 
+from zope.interface import implementer
+
+from .interfaces import IApi
+
 
 @dataclass
 class Covid19Info:
@@ -29,15 +33,18 @@ class Covid19Info:
                    f"😷{self.cases}\n\n"
 
 
+@implementer(IApi)
 class Covid19:
     def __init__(self, countries: List[str], mode: str):
         self.countries = countries
         self.mode = mode
+        self.url = "https://coronavirus-19-api.herokuapp.com/countries/"
 
-    def get_covid_info(self) -> str:
+    def get_info(self) -> str:
         message = ""
         for country in self.countries:
-            result = requests.get(f"https://coronavirus-19-api.herokuapp.com/countries/{country}")
+            url = self.url + country
+            result = requests.get(url)
             if result.content != b'Country not found':
                 result = result.json()
                 if self.mode == "EXTENDED":
