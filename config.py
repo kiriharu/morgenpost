@@ -1,7 +1,7 @@
 # Бот токен от телеги вида 71231246:WUGvG2D412415ssFasf3YT6HTTs1
-TELEGRAM_API_TOKEN = ""
+TELEGRAM_API_TOKEN = "1070251777:AAF50fkFAPATZEz7iSTJVvLUk56AnDKGsYY"
 # ID или юзернеймы (но лучше ID) пользователей телеги, которым посылается сводка
-TELEGRAM_USERS_ID = [1234567]
+TELEGRAM_USERS_ID = [505811219]
 
 # Стартовое сообщение
 STARTING_MESSAGE = "Доброе утро! Вот тебе сводка данных с утра: \n\n"
@@ -15,8 +15,9 @@ QIWI_CROSS_RATES = [("643", "978"), ("643", "840")]
 # Будет дано сколько рублей стоит определенное количество единиц валюты, выданное РБК.
 RBC_CROSS_RATES = ["USD", "EUR", "ZAR"]
 
-# Нужно ли получать курс BTC (долларов за единицу)
-IS_NEED_BTC = True
+# Курс каких криптовалют получать
+# Обозначения валют на английском
+BLOCKCHAIN_RATES = ["BTC", "USDT", "XEM"]
 
 # https://weatherstack.com 1000 вызовов в месяц, шикарно, нам хватит.
 WEATHERSTACK_API_KEY = ""
