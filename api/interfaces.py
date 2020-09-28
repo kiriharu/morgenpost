@@ -12,3 +12,11 @@ class IApi:
     @abstractmethod
     def url(self):
         """API's url"""
+
+    @url.getter
+    def url(self):
+        return self._url
+
+    @url.setter
+    def url(self, value):
+        self._url = value
