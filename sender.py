@@ -35,7 +35,7 @@ if QIWI_TOKEN:
 
 if CBR_CROSS_RATES:
     message_to_send += "🏦Курс валют ЦБР: \n\n"
-    message_to_send += cbr_valutes.CbrValutes(Cbr_CROSS_RATES).get()
+    message_to_send += cbr_valutes.CbrValutes(CBR_CROSS_RATES).get()
     message_to_send += "\n"
 
 if BLOCKCHAIN_RATES:
