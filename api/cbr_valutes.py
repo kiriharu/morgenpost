@@ -8,7 +8,7 @@ from .interfaces import IApi
 
 
 @dataclass
-class RbcValutesInfo:
+class CbrValutesInfo:
     valute: str
     nominal: int
     value: Decimal
@@ -17,22 +17,24 @@ class RbcValutesInfo:
         return f"💰 За {self.nominal}{self.valute} дают {self.value}RUB\n"
 
 
-class RbcValutes(IApi, ABC):
+class CbrValutes(IApi, ABC):
     def __init__(self, valutes: List[str]):
+        self.header = "🏦Курс валют ЦБР: \n\n"
         self.valutes: List[str] = valutes
         self.url = "https://www.cbr-xml-daily.ru/daily_json.js"
 
     def get(self) -> str:
         result = (requests.get(self.url).json())["Valute"]
-        message = ""
+        message = self.header
 
         for valute in self.valutes:
             if valute in result:
 
-                message += str(RbcValutesInfo(
+                message += str(CbrValutesInfo(
                     valute=valute,
                     nominal=result[valute]["Nominal"],
                     value=Decimal(str(result[valute]["Value"]))
                 ))
 
+        message += "\n"
         return message
