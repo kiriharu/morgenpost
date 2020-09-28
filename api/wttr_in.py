@@ -1,5 +1,8 @@
+from abc import ABC
 from dataclasses import dataclass
 import requests
+
+from .interfaces import IApi
 
 
 @dataclass
@@ -25,12 +28,12 @@ class WttrInInfo:
                f"☁{self.cloudcover}\n"
 
 
-class WttrIn:
+class WttrIn(IApi, ABC):
     def __init__(self, city):
         self.city: str = city
         self.url: str = f"https://wttr.in/{city}?0&format=j1&lang=ru&m&M"
 
-    def get_basic_info(self) -> str:
+    def get(self) -> str:
         result = ((requests.get(self.url).json())['current_condition'])[0]
         return str(WttrInInfo(
             city=self.city,
