@@ -14,14 +14,14 @@ if WEATHERSTACK_API_KEY:
     message_to_send += "☀️Погода сейчас: \n\n"
     weather_api = weatherstack.WeatherStack(WEATHERSTACK_API_KEY)
     for location in WEATHERSTACK_LOCATIONS:
-        message_to_send += weather_api.get_info(location)
+        message_to_send += weather_api.get(location)
     message_to_send += "\n"
 
 
 if WTTRIN_LOCATIONS:
     message_to_send += "☀️Погода сейчас: \n\n"
     for location in WTTRIN_LOCATIONS:
-        message_to_send += wttr_in.WttrIn(location).get_info()
+        message_to_send += wttr_in.WttrIn(location).get()
         message_to_send += "\n"
 
 
@@ -29,18 +29,18 @@ if QIWI_TOKEN:
     message_to_send += "🥝Курс в обменнике Qiwi: \n\n"
     qiwi_api = qiwi.Qiwi(QIWI_TOKEN)
     for crossrate in QIWI_CROSS_RATES:
-        message_to_send += qiwi_api.get_info(*crossrate)
+        message_to_send += qiwi_api.get(*crossrate)
     message_to_send += "\n"
 
 
 if RBC_CROSS_RATES:
     message_to_send += "🏦Курс валют РБК: \n\n"
-    message_to_send += rbc_valutes.RbcValutes(RBC_CROSS_RATES).get_info()
+    message_to_send += rbc_valutes.RbcValutes(RBC_CROSS_RATES).get()
     message_to_send += "\n"
 
 if BLOCKCHAIN_RATES:
     message_to_send += "🏦Курс криптовалют: \n\n"
-    message_to_send += blockchain_rates.BlockchainRates(BLOCKCHAIN_RATES).get_info()
+    message_to_send += blockchain_rates.BlockchainRates(BLOCKCHAIN_RATES).get()
     message_to_send += "\n"
 
 if COVID_COUNTRIES:
