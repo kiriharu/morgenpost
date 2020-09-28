@@ -1,7 +1,7 @@
 from config import *
 from api import (
     weatherstack, qiwi, telegram,
-    rss, wttr_in, rbc_valutes,
+    rss, wttr_in, cbr_valutes,
     covid19, blockchain_rates
 )
 
@@ -33,9 +33,9 @@ if QIWI_TOKEN:
     message_to_send += "\n"
 
 
-if RBC_CROSS_RATES:
-    message_to_send += "🏦Курс валют РБК: \n\n"
-    message_to_send += rbc_valutes.RbcValutes(RBC_CROSS_RATES).get()
+if CBR_CROSS_RATES:
+    message_to_send += "🏦Курс валют ЦБР: \n\n"
+    message_to_send += cbr_valutes.CbrValutes(Cbr_CROSS_RATES).get()
     message_to_send += "\n"
 
 if BLOCKCHAIN_RATES:
