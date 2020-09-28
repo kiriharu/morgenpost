@@ -1,7 +1,6 @@
+from abc import ABC
 import requests
 from dataclasses import dataclass
-
-from zope.interface import implementer
 
 from .interfaces import IApi
 
@@ -25,8 +24,7 @@ class CrossRate:
         return f"💰 За 1 {replace_by_name(self.to)} дают {replace_by_name(self.from_e)} {self.rate}\n"
 
 
-@implementer(IApi)
-class Qiwi:
+class Qiwi(IApi, ABC):
     url = "https://edge.qiwi.com"
 
     def __init__(self, api_token: str):
@@ -46,7 +44,7 @@ class Qiwi:
     def cross_rates(self):
         return self.call("/sinap/crossRates")
 
-    def get_info(self, rate_from: str, rate_to: str) -> str:
+    def get(self, rate_from: str, rate_to: str) -> str:
         crossrate_dict = [x for x in self.cross_rates()
                       if x['from'] == rate_from and x['to'] == rate_to][0]
         return str(CrossRate(

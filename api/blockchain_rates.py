@@ -1,9 +1,8 @@
+from abc import ABC
 from dataclasses import dataclass
 from decimal import Decimal, ROUND_HALF_UP
 from typing import List
 import requests
-
-from zope.interface import implementer
 
 from .interfaces import IApi
 
@@ -17,13 +16,12 @@ class BlockchainRatesInfo:
         return f"💰 За 1{self.symbol} дают {self.price}USD\n"
 
 
-@implementer(IApi)
-class BlockchainRates:
+class BlockchainRates(IApi, ABC):
     def __init__(self, symbols: List[str]):
         self.symbols = symbols
         self.url: str = f"http://api.coincap.io/v2/assets"
 
-    def get_info(self) -> str:
+    def get(self) -> str:
         result = (requests.get(self.url).json())["data"]
         message = ""
         for currency in result:

@@ -1,8 +1,7 @@
+from abc import ABC
 from typing import List
 import requests
 from dataclasses import dataclass
-
-from zope.interface import implementer
 
 from .interfaces import IApi
 
@@ -33,14 +32,13 @@ class Covid19Info:
                    f"😷{self.cases}\n\n"
 
 
-@implementer(IApi)
-class Covid19:
+class Covid19(IApi, ABC):
     def __init__(self, countries: List[str], mode: str):
         self.countries = countries
         self.mode = mode
         self.url = "https://coronavirus-19-api.herokuapp.com/countries/"
 
-    def get_info(self) -> str:
+    def get(self) -> str:
         message = ""
         for country in self.countries:
             url = self.url + country

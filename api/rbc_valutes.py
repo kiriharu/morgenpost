@@ -1,11 +1,11 @@
+from abc import ABC
 from typing import List
 import requests
 from dataclasses import dataclass
 from decimal import Decimal
 
-from zope.interface import implementer
-
 from .interfaces import IApi
+
 
 @dataclass
 class RbcValutesInfo:
@@ -17,13 +17,12 @@ class RbcValutesInfo:
         return f"💰 За {self.nominal}{self.valute} дают {self.value}RUB\n"
 
 
-@implementer(IApi)
-class RbcValutes:
+class RbcValutes(IApi, ABC):
     def __init__(self, valutes: List[str]):
         self.valutes: List[str] = valutes
         self.url = "https://www.cbr-xml-daily.ru/daily_json.js"
 
-    def get_info(self) -> str:
+    def get(self) -> str:
         result = (requests.get(self.url).json())["Valute"]
         message = ""
 

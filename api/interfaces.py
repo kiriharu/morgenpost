@@ -1,8 +1,9 @@
-import zope.interface
+from abc import ABCMeta, abstractmethod
 
 
-class IApi(zope.interface.Interface):
-    url = zope.interface.Attribute("""API url""")
+class IApi:
+    __metaclass__ = ABCMeta
 
-    def get_info(self, *args, **kwargs) -> str:
+    @abstractmethod
+    def get(self, *args, **kwargs) -> str:
         """Get info from API"""

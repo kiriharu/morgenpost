@@ -46,9 +46,9 @@ if BLOCKCHAIN_RATES:
 if COVID_COUNTRIES:
     message_to_send += "🦠Статистика по коронавирусу: \n\n"
     if COVID_MODE:
-        message_to_send += covid19.Covid19(COVID_COUNTRIES, COVID_MODE).get_info()
+        message_to_send += covid19.Covid19(COVID_COUNTRIES, COVID_MODE).get()
     else:
-        message_to_send += covid19.Covid19(COVID_COUNTRIES, "EXTENDED").get_info()
+        message_to_send += covid19.Covid19(COVID_COUNTRIES, "EXTENDED").get()
     message_to_send += "\n"
 
 
