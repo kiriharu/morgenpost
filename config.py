@@ -1,13 +1,13 @@
 # Бот токен от телеги вида 71231246:WUGvG2D412415ssFasf3YT6HTTs1
-TELEGRAM_API_TOKEN = ""
+TELEGRAM_API_TOKEN = "1070251777:AAH4TuxJlBz-CGUtVU1amcAN_phtriEqJok"
 # ID или юзернеймы (но лучше ID) пользователей телеги, которым посылается сводка
-TELEGRAM_USERS_ID = []
+TELEGRAM_USERS_ID = [505811219]
 
 # Стартовое сообщение
 STARTING_MESSAGE = "Доброе утро! Вот тебе сводка данных с утра: \n\n"
 
 # Киви токен, получаем тут: https://qiwi.com/api
-QIWI_TOKEN = ""
+QIWI_TOKEN = "443266a45f9c0cef681efb6256d74c45"
 # Инфа об обмене валют, вида (откуда, в какую)
 QIWI_CROSS_RATES = [("643", "978"), ("643", "840")]
 
@@ -20,7 +20,7 @@ CBR_CROSS_RATES = ["USD", "EUR", "ZAR"]
 BLOCKCHAIN_RATES = ["BTC", "USDT", "XEM"]
 
 # https://weatherstack.com 1000 вызовов в месяц, шикарно, нам хватит.
-WEATHERSTACK_API_KEY = ""
+WEATHERSTACK_API_KEY = "c3fd904310cce0100473bcc0fa81673c"
 # имена локаций через запятую, на англицком
 WEATHERSTACK_LOCATIONS = ["Moscow", "Minsk"]
 

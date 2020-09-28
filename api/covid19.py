@@ -34,6 +34,7 @@ class Covid19Info:
 
 class Covid19(IApi, ABC):
     def __init__(self, countries: List[str], mode: str):
+        self.header = "🦠Статистика по коронавирусу: \n\n"
         self.countries = countries
         self.mode = mode
         self.url = "https://coronavirus-19-api.herokuapp.com/countries/"
@@ -70,4 +71,5 @@ class Covid19(IApi, ABC):
         if message == "":
             message = "Статистика отсутствует, проверьте данные в массиве!"
 
+        message += "\n"
         return message

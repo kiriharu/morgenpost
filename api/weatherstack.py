@@ -1,4 +1,6 @@
 from abc import ABC
+from typing import List
+
 import requests
 from dataclasses import dataclass
 
@@ -23,7 +25,9 @@ class WeatherBasicInfo:
 class WeatherStack(IApi, ABC):
     url = "http://api.weatherstack.com/current"
 
-    def __init__(self, access_key: str):
+    def __init__(self, access_key: str, locations: List[str]):
+        self.header = "☀️Погода сейчас: \n\n"
+        self.locations = locations
         self.access_key = access_key
 
     def call(self, params: dict) -> dict:
@@ -40,15 +44,21 @@ class WeatherStack(IApi, ABC):
             raise Exception(result["error"])
         return result
 
-    def get(self, target: str) -> str:
-        query = dict(query=target)
-        response = self.call(query)
-        return str(WeatherBasicInfo(
-            temperature=response['current']['temperature'],
-            feelslike=response['current']['feelslike'],
-            humidity=response['current']['humidity'],
-            pressure=response['current']['pressure'],
-            wind_speed=response['current']['wind_speed'],
-            name=response['request']['query'],
-            weather_descriptions="".join(response['current']['weather_descriptions'])
-        ))
+    def get(self) -> str:
+        message = self.header
+
+        for location in self.locations:
+            query = dict(query=location)
+            response = self.call(query)
+            message += str(WeatherBasicInfo(
+                temperature=response['current']['temperature'],
+                feelslike=response['current']['feelslike'],
+                humidity=response['current']['humidity'],
+                pressure=response['current']['pressure'],
+                wind_speed=response['current']['wind_speed'],
+                name=response['request']['query'],
+                weather_descriptions="".join(response['current']['weather_descriptions'])
+            ))
+
+        message += "\n"
+        return message

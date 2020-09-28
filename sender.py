@@ -5,52 +5,29 @@ from api import (
     covid19, blockchain_rates
 )
 
-
 message_to_send = ""
 message_to_send += STARTING_MESSAGE
 
-
 if WEATHERSTACK_API_KEY:
-    message_to_send += "☀️Погода сейчас: \n\n"
-    weather_api = weatherstack.WeatherStack(WEATHERSTACK_API_KEY)
-    for location in WEATHERSTACK_LOCATIONS:
-        message_to_send += weather_api.get(location)
-    message_to_send += "\n"
-
+    message_to_send += weatherstack.WeatherStack(WEATHERSTACK_API_KEY, WEATHERSTACK_LOCATIONS).get()
 
 if WTTRIN_LOCATIONS:
-    message_to_send += "☀️Погода сейчас: \n\n"
-    for location in WTTRIN_LOCATIONS:
-        message_to_send += wttr_in.WttrIn(location).get()
-        message_to_send += "\n"
-
+    message_to_send += wttr_in.WttrIn(WTTRIN_LOCATIONS).get()
 
 if QIWI_TOKEN:
-    message_to_send += "🥝Курс в обменнике Qiwi: \n\n"
-    qiwi_api = qiwi.Qiwi(QIWI_TOKEN)
-    for crossrate in QIWI_CROSS_RATES:
-        message_to_send += qiwi_api.get(*crossrate)
-    message_to_send += "\n"
-
+    message_to_send += qiwi.Qiwi(QIWI_TOKEN, QIWI_CROSS_RATES).get()
 
 if CBR_CROSS_RATES:
-    message_to_send += "🏦Курс валют ЦБР: \n\n"
-    message_to_send += cbr_valutes.CbrValutes(Cbr_CROSS_RATES).get()
-    message_to_send += "\n"
+    message_to_send += cbr_valutes.CbrValutes(CBR_CROSS_RATES).get()
 
 if BLOCKCHAIN_RATES:
-    message_to_send += "🏦Курс криптовалют: \n\n"
     message_to_send += blockchain_rates.BlockchainRates(BLOCKCHAIN_RATES).get()
-    message_to_send += "\n"
 
 if COVID_COUNTRIES:
-    message_to_send += "🦠Статистика по коронавирусу: \n\n"
     if COVID_MODE:
         message_to_send += covid19.Covid19(COVID_COUNTRIES, COVID_MODE).get()
     else:
         message_to_send += covid19.Covid19(COVID_COUNTRIES, "EXTENDED").get()
-    message_to_send += "\n"
-
 
 if RSS_MAX_ENTRIES > 0 and len(RSS_FEEDS) > 0:
     for feed_params in RSS_FEEDS:
@@ -61,10 +38,7 @@ if RSS_MAX_ENTRIES > 0 and len(RSS_FEEDS) > 0:
             message_to_send += f"📍 {str(entry)}\n"
         message_to_send += "\n"
 
-
 if TELEGRAM_API_TOKEN:
     tg = telegram.Telegram(TELEGRAM_API_TOKEN)
     for telegram_user in TELEGRAM_USERS_ID:
         tg.send(telegram_user, message_to_send)
-
-

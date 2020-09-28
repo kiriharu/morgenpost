@@ -1,4 +1,6 @@
 from abc import ABC
+from typing import List
+
 import requests
 from dataclasses import dataclass
 
@@ -27,7 +29,9 @@ class CrossRate:
 class Qiwi(IApi, ABC):
     url = "https://edge.qiwi.com"
 
-    def __init__(self, api_token: str):
+    def __init__(self, api_token: str, valutes: List[str]):
+        self.header = "🥝Курс в обменнике Qiwi: \n\n"
+        self.valutes = valutes
         self.session = requests.Session()
         self.session.headers = {
             "authorization": f"Bearer {api_token}",
@@ -44,11 +48,17 @@ class Qiwi(IApi, ABC):
     def cross_rates(self):
         return self.call("/sinap/crossRates")
 
-    def get(self, rate_from: str, rate_to: str) -> str:
-        crossrate_dict = [x for x in self.cross_rates()
-                      if x['from'] == rate_from and x['to'] == rate_to][0]
-        return str(CrossRate(
-            from_e=crossrate_dict['from'],
-            to=crossrate_dict['to'],
-            rate=crossrate_dict['rate']
-        ))
+    def get(self) -> str:
+        message = self.header
+        for rates in self.valutes:
+            rate_from, rate_to = rates[0], rates[1]
+            crossrate_dict = [x for x in self.cross_rates()
+                          if x['from'] == rate_from and x['to'] == rate_to][0]
+
+            message += str(CrossRate(
+                from_e=crossrate_dict['from'],
+                to=crossrate_dict['to'],
+                rate=crossrate_dict['rate']
+            ))
+        message += "\n"
+        return message

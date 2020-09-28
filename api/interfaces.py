@@ -20,3 +20,16 @@ class IApi:
     @url.setter
     def url(self, value):
         self._url = value
+
+    @property
+    @abstractmethod
+    def header(self):
+        """API's url"""
+
+    @header.getter
+    def header(self):
+        return self._header
+
+    @header.setter
+    def header(self, value):
+        self._header = value

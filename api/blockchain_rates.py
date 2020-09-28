@@ -18,12 +18,13 @@ class BlockchainRatesInfo:
 
 class BlockchainRates(IApi, ABC):
     def __init__(self, symbols: List[str]):
+        self.header = "🏦Курс криптовалют: \n\n"
         self.symbols = symbols
         self.url: str = f"http://api.coincap.io/v2/assets"
 
     def get(self) -> str:
         result = (requests.get(self.url).json())["data"]
-        message = ""
+        message = self.header
         for currency in result:
             if currency["symbol"] in self.symbols:
                 price = Decimal(currency["priceUsd"])
@@ -32,4 +33,5 @@ class BlockchainRates(IApi, ABC):
                     symbol=currency["symbol"],
                     price=price
                 ))
+        message += "\n"
         return message
