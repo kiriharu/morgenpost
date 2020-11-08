@@ -1,34 +1,48 @@
 import typing
+from enum import Enum
 
-from api.interfaces import IApi
 from api.telegram import Telegram
+
+T = typing.TypeVar("T")
+
+
+class GlobalApi:
+    def __init__(self, api: T, configs: typing.List[T]):
+        self.api = api
+        self.configs = configs
+
+    def setup_and_get(self):
+        try:
+            ready_api = self.api(*self.configs)
+        except:
+            raise ValueError(f"Cannot initialize {type(self.api).__name__}")
+
+        return ready_api
 
 
 class Registration:
-    def __init__(self, starting_message: str, *args):
-        self.net: typing.Union[Telegram]
+    def __init__(self, starting_message: str, type_net: str, apis: typing.List[GlobalApi]):
+        self.type_net: str = type_net.lower()
+        self.net: T
         self.chat_ids: typing.List[typing.Union[str, int]]
         self.message = starting_message
-        self.work_api: typing.List[typing.Tuple[..., typing.List[...]]] = []
+        self.work_api: typing.List[GlobalApi] = apis
 
-        for api in args:
-            is_work = True
-            for config in api[1]:
-                if not config:
-                    is_work = False
+    def init_net(self, token: str, chat_ids: typing.List[typing.Union[str, int]]):
+        if self.type_net == "telegram":
+            self.net = Telegram(token)
+            self.chat_ids = chat_ids
 
-            if is_work:
-                self.work_api.append((api[0], api[1]))
-
-    def init_telegram(self, token: str, chat_ids: typing.List[typing.Union[str, int]]):
-        self.net = Telegram(token)
-        self.chat_ids = chat_ids
+        elif self.type_net == "vk":
+            pass
+        elif self.type_net == "discord":
+            pass
 
         return self
 
     def init_apis(self):
-        for APIs_tuple in self.work_api:
-            self.message += (APIs_tuple[0])(*APIs_tuple[1]).get()
+        for api in self.work_api:
+            self.message += api.setup_and_get().get()
 
         return self
 
