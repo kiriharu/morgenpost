@@ -14,7 +14,7 @@ class GlobalApi:
     def setup_and_get(self):
         try:
             ready_api = self.api(*self.configs)
-        except:
+        except Exception:
             raise ValueError(f"Cannot initialize {type(self.api).__name__}")
 
         return ready_api
@@ -23,8 +23,8 @@ class GlobalApi:
 class Registration:
     def __init__(self, starting_message: str, type_net: str, apis: typing.List[GlobalApi]):
         self.type_net: str = type_net.lower()
-        self.net: T
-        self.chat_ids: typing.List[typing.Union[str, int]]
+        self.net: T = None
+        self.chat_ids: typing.List[typing.Union[str, int]] = []
         self.message = starting_message
         self.work_api: typing.List[GlobalApi] = apis
 
