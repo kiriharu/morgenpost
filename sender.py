@@ -17,7 +17,7 @@ from api import (
 from registration import Registration, GlobalApi
 
 if __name__ == "__main__":
-    Registration(STARTING_MESSAGE, "telegram",
+    Registration(STARTING_MESSAGE, Registration.NetType.Telegram,
                  [GlobalApi(weatherstack.WeatherStack, [WEATHERSTACK_API_KEY, WEATHERSTACK_LOCATIONS]),
                   GlobalApi(wttr_in.WttrIn, [WTTRIN_LOCATIONS]),
                   GlobalApi(qiwi.Qiwi, [QIWI_TOKEN, QIWI_CROSS_RATES]),
