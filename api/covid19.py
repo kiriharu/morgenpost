@@ -33,10 +33,16 @@ class Covid19Info:
 
 
 class Covid19(IApi, ABC):
+
     def __init__(self, countries: List[str], mode: str):
         self.header = "🦠Статистика по коронавирусу: \n\n"
         self.countries = countries
-        self.mode = mode
+
+        if (mode == "") or (mode != "SHORT" and mode != "EXTENDED"):
+            self.mode = "EXTENDED"
+        else:
+            self.mode = mode
+
         self.url = "https://coronavirus-19-api.herokuapp.com/countries/"
 
     def get(self) -> str:
