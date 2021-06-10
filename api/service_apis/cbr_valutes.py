@@ -7,6 +7,11 @@ from decimal import Decimal
 from service.interfaces import IApi
 
 
+class CBRConfig:
+    def __init__(self, cross_rates: List[str]):
+        self.cross_rates = cross_rates
+
+
 @dataclass
 class CbrValutesInfo:
     valute: str
@@ -18,9 +23,9 @@ class CbrValutesInfo:
 
 
 class CbrValutes(IApi, ABC):
-    def __init__(self, valutes: List[str]):
+    def __init__(self, config: CBRConfig):
         self.header = "🏦Курс валют ЦБР: \n\n"
-        self.valutes: List[str] = valutes
+        self.valutes: List[str] = config.cross_rates
         self.url = "https://www.cbr-xml-daily.ru/daily_json.js"
 
     def get(self) -> str:

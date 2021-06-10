@@ -7,6 +7,11 @@ import requests
 from service.interfaces import IApi
 
 
+class BlockchainConfig:
+    def __init__(self, blockchain_rates: List[str]):
+        self.blockchain_rates = blockchain_rates
+
+
 @dataclass
 class BlockchainRatesInfo:
     symbol: str
@@ -17,9 +22,9 @@ class BlockchainRatesInfo:
 
 
 class BlockchainRates(IApi, ABC):
-    def __init__(self, symbols: List[str]):
+    def __init__(self, config: BlockchainConfig):
         self.header = "🏦Курс криптовалют: \n\n"
-        self.symbols = symbols
+        self.symbols = config.blockchain_rates
         self.url: str = f"http://api.coincap.io/v2/assets"
 
     def get(self) -> str:

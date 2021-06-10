@@ -7,6 +7,11 @@ import requests
 from service.interfaces import IApi
 
 
+class WttrInConfig:
+    def __init__(self, locations: List[str]):
+        self.locations = locations
+
+
 @dataclass
 class WttrInInfo:
     city: str
@@ -31,9 +36,9 @@ class WttrInInfo:
 
 
 class WttrIn(IApi, ABC):
-    def __init__(self, cities: List[str]):
+    def __init__(self, config: WttrInConfig):
         self.header = "☀️Погода сейчас: \n\n"
-        self.cities = cities
+        self.cities = config.locations
         self.url = f"https://wttr.in/"
 
     def get(self) -> str:

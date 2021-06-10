@@ -13,26 +13,12 @@ class SocialNetType(Enum):
     Discord = 2
 
 
-class GlobalApi:
-    def __init__(self, api: T, configs: typing.List[T]):
-        self.api = api
-        self.configs = configs
-
-    def setup_and_get(self):
-        try:
-            ready_api = self.api(*self.configs)
-        except Exception:
-            raise ValueError(f"Cannot initialize {type(self.api).__name__}")
-
-        return ready_api
-
-
 class ApisList:
-    def __init__(self, apis: typing.Optional[typing.List[GlobalApi]] = None):
+    def __init__(self, apis: typing.Optional[typing.List[T]] = None):
         if apis is None:
             self.work_api = []
         else:
-            self.work_api: typing.List[GlobalApi] = apis
+            self.work_api: typing.List[T] = apis
 
     def init_apis(self):
         for api in self.work_api:
@@ -40,9 +26,8 @@ class ApisList:
 
         return self
 
-    def add_api(self, api: T, configs: typing.List[T]):
-        concrete_api = GlobalApi(api, configs).setup_and_get()
-        self.work_api.append(concrete_api)
+    def add_api(self, api: T):
+        self.work_api.append(api)
         return self
 
     def get_str(self):

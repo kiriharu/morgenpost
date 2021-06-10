@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import List
+from typing import List, Tuple
 
 import requests
 from dataclasses import dataclass
@@ -16,6 +16,12 @@ def replace_by_name(code):
         return "USD"
 
 
+class QiwiConfig:
+    def __init__(self, token: str, cross_rates: List[Tuple[str, str]]):
+        self.token = token
+        self.cross_rates = cross_rates
+
+
 @dataclass
 class CrossRate:
     from_e: str
@@ -29,12 +35,12 @@ class CrossRate:
 class Qiwi(IApi, ABC):
     url = "https://edge.qiwi.com"
 
-    def __init__(self, api_token: str, valutes: List[str]):
+    def __init__(self, config: QiwiConfig):
         self.header = "🥝Курс в обменнике Qiwi: \n\n"
-        self.valutes = valutes
+        self.valutes = config.cross_rates
         self.session = requests.Session()
         self.session.headers = {
-            "authorization": f"Bearer {api_token}",
+            "authorization": f"Bearer {config.token}",
             "content-type": "application/json",
             "Accept": "application/json"
         }

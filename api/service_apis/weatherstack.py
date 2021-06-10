@@ -6,6 +6,13 @@ from dataclasses import dataclass
 
 from service.interfaces import IApi
 
+
+class WeatherStackConfig:
+    def __init__(self, token: str, locations: List[str]):
+        self.token = token
+        self.locations = locations
+
+
 @dataclass
 class WeatherBasicInfo:
     temperature: int
@@ -25,10 +32,10 @@ class WeatherBasicInfo:
 class WeatherStack(IApi, ABC):
     url = "http://api.weatherstack.com/current"
 
-    def __init__(self, access_key: str, locations: List[str]):
+    def __init__(self, config: WeatherStackConfig):
         self.header = "☀️Погода сейчас: \n\n"
-        self.locations = locations
-        self.access_key = access_key
+        self.locations = config.locations
+        self.access_key = config.token
 
     def call(self, params: dict) -> dict:
         params["access_key"] = self.access_key

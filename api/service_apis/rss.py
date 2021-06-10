@@ -5,6 +5,12 @@ import requests
 from dataclasses import dataclass
 
 
+class RSSConfig:
+    def __init__(self, max_entries: int, feeds: List[Tuple[str, str]]):
+        self.max_entries = max_entries
+        self.feeds = feeds
+
+
 @dataclass
 class NewsObj:
     link: str
@@ -40,9 +46,9 @@ class Feed:
 
 class RSS:
 
-    def __init__(self, feeds: List[Tuple[str, str]], max_entries):
-        self.feeds = feeds
-        self.max_entries = max_entries
+    def __init__(self, config: RSSConfig):
+        self.feeds = config.feeds
+        self.max_entries = config.max_entries
 
     def get(self):
         rss_message = ""

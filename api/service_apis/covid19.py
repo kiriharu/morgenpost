@@ -6,6 +6,12 @@ from dataclasses import dataclass
 from service.interfaces import IApi
 
 
+class Covid19Config:
+    def __init__(self, countries: List[str], mode: str):
+        self.countries = countries
+        self.mode = mode
+
+
 @dataclass
 class Covid19Info:
     mode: str
@@ -34,14 +40,14 @@ class Covid19Info:
 
 class Covid19(IApi, ABC):
 
-    def __init__(self, countries: List[str], mode: str):
+    def __init__(self, config: Covid19Config):
         self.header = "🦠Статистика по коронавирусу: \n\n"
-        self.countries = countries
+        self.countries = config.countries
 
-        if (mode == "") or (mode != "SHORT" and mode != "EXTENDED"):
+        if (config.mode == "") or (config.mode != "SHORT" and config.mode != "EXTENDED"):
             self.mode = "EXTENDED"
         else:
-            self.mode = mode
+            self.mode = config.mode
 
         self.url = "https://coronavirus-19-api.herokuapp.com/countries/"
 
