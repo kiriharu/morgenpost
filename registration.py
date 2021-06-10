@@ -6,6 +6,7 @@ from api.vkontakte import Vkontakte
 
 T = typing.TypeVar("T")
 
+
 class GlobalApi:
     def __init__(self, api: T, configs: typing.List[T]):
         self.api = api
@@ -18,6 +19,7 @@ class GlobalApi:
             raise ValueError(f"Cannot initialize {type(self.api).__name__}")
 
         return ready_api
+
 
 class Registration:
     def __init__(self, starting_message: str, type_net, apis: typing.List[GlobalApi]):

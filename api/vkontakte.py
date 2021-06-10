@@ -2,6 +2,7 @@ import requests
 from typing import Union, List
 from random import randint
 
+
 class Vkontakte:
     api_url = "https://api.vk.com/method/"
 
