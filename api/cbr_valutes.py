@@ -19,12 +19,13 @@ class CbrValutesInfo:
 
 class CbrValutes(IApi, ABC):
     def __init__(self, valutes: List[str]):
+        self.header = "🏦Курс валют ЦБР: \n\n"
         self.valutes: List[str] = valutes
         self.url = "https://www.cbr-xml-daily.ru/daily_json.js"
 
     def get(self) -> str:
         result = (requests.get(self.url).json())["Valute"]
-        message = ""
+        message = self.header
 
         for valute in self.valutes:
             if valute in result:
@@ -35,4 +36,5 @@ class CbrValutes(IApi, ABC):
                     value=Decimal(str(result[valute]["Value"]))
                 ))
 
+        message += "\n"
         return message

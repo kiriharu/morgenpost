@@ -1,5 +1,7 @@
 from abc import ABC
 from dataclasses import dataclass
+from typing import List
+
 import requests
 
 from .interfaces import IApi
@@ -29,20 +31,26 @@ class WttrInInfo:
 
 
 class WttrIn(IApi, ABC):
-    def __init__(self, city):
-        self.city: str = city
-        self.url: str = f"https://wttr.in/{city}?0&format=j1&lang=ru&m&M"
+    def __init__(self, cities: List[str]):
+        self.header = "☀️Погода сейчас: \n\n"
+        self.cities = cities
+        self.url = f"https://wttr.in/"
 
     def get(self) -> str:
-        result = ((requests.get(self.url).json())['current_condition'])[0]
-        return str(WttrInInfo(
-            city=self.city,
-            temperature=result['temp_C'],
-            feels_like_C=result['FeelsLikeC'],
-            cloudcover=result['cloudcover'],
-            humidity=result['humidity'],
-            weather=result['lang_ru'][0]['value'],
-            uv_index=result['uvIndex'],
-            visibility=result['visibility'],
-            wind_speed=result['windspeedKmph']
-        ))
+        message = self.header
+        for city in self.cities:
+            url = self.url + f"{city}?0&format=j1&lang=ru&m&M"
+            result = ((requests.get(url).json())['current_condition'])[0]
+            message += str(WttrInInfo(
+                city=city,
+                temperature=result['temp_C'],
+                feels_like_C=result['FeelsLikeC'],
+                cloudcover=result['cloudcover'],
+                humidity=result['humidity'],
+                weather=result['lang_ru'][0]['value'],
+                uv_index=result['uvIndex'],
+                visibility=result['visibility'],
+                wind_speed=result['windspeedKmph']
+            ))
+        message += "\n"
+        return message
