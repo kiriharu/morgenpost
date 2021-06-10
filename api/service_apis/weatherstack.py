@@ -4,7 +4,7 @@ from typing import List
 import requests
 from dataclasses import dataclass
 
-from .interfaces import IApi
+from service.interfaces import IApi
 
 @dataclass
 class WeatherBasicInfo:

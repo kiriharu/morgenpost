@@ -4,7 +4,7 @@ import requests
 from dataclasses import dataclass
 from decimal import Decimal
 
-from .interfaces import IApi
+from service.interfaces import IApi
 
 
 @dataclass

@@ -4,7 +4,7 @@ from typing import List
 
 import requests
 
-from .interfaces import IApi
+from service.interfaces import IApi
 
 
 @dataclass

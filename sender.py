@@ -9,22 +9,23 @@ from config import (
     RSS_FEEDS, RSS_MAX_ENTRIES,
     TELEGRAM_API_TOKEN, TELEGRAM_USERS_ID
 )
-from api import (
-    weatherstack, qiwi,
-    rss, wttr_in, cbr_valutes,
-    covid19, blockchain_rates
-)
-from registration import Registration, GlobalApi
+from api.service_apis import weatherstack, qiwi, blockchain_rates, wttr_in, rss, covid19, cbr_valutes
+from service.apislist import ApisList, SocialNet, SocialNetType
 
 if __name__ == "__main__":
-    Registration(STARTING_MESSAGE, Registration.NetType.Telegram,
-                 [GlobalApi(weatherstack.WeatherStack, [WEATHERSTACK_API_KEY, WEATHERSTACK_LOCATIONS]),
-                  GlobalApi(wttr_in.WttrIn, [WTTRIN_LOCATIONS]),
-                  GlobalApi(qiwi.Qiwi, [QIWI_TOKEN, QIWI_CROSS_RATES]),
-                  GlobalApi(cbr_valutes.CbrValutes, [CBR_CROSS_RATES]),
-                  GlobalApi(blockchain_rates.BlockchainRates, [BLOCKCHAIN_RATES]),
-                  GlobalApi(covid19.Covid19, [COVID_COUNTRIES, COVID_MODE]),
-                  GlobalApi(rss.RSS, [RSS_FEEDS, RSS_MAX_ENTRIES])]) \
-        .init_net(TELEGRAM_API_TOKEN, TELEGRAM_USERS_ID) \
-        .init_apis() \
-        .send()
+    message = STARTING_MESSAGE
+
+    apis = ApisList()
+    apis.add_api(weatherstack.WeatherStack, [WEATHERSTACK_API_KEY, WEATHERSTACK_LOCATIONS])
+    apis.add_api(wttr_in.WttrIn, [WTTRIN_LOCATIONS])
+    apis.add_api(qiwi.Qiwi, [QIWI_TOKEN, QIWI_CROSS_RATES])
+    apis.add_api(cbr_valutes.CbrValutes, [CBR_CROSS_RATES])
+    apis.add_api(blockchain_rates.BlockchainRates, [BLOCKCHAIN_RATES])
+    apis.add_api(covid19.Covid19, [COVID_COUNTRIES, COVID_MODE])
+    apis.add_api(rss.RSS, [RSS_FEEDS, RSS_MAX_ENTRIES])
+
+    message += apis.get_str()
+
+    telegram_net = SocialNet(SocialNetType.Telegram)
+    telegram_net.init_net(TELEGRAM_API_TOKEN)
+    telegram_net.send(message, TELEGRAM_USERS_ID)
