@@ -61,9 +61,12 @@ class ApisList:
 
 
 class SocialNet:
-    def __init__(self, type_net: SocialNetType):
-        self.net: T = None
+    def __init__(self, type_net: SocialNetType, token: typing.Optional[str] = None):
         self.type_net: SocialNet.NetType = type_net
+        if token is not None:
+            self.init_net(token)
+        else:
+            self.net: T = None
 
     def send(self, message, chat_ids):
         for chat_id in chat_ids:
