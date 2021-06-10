@@ -13,7 +13,7 @@ class Telegram:
         return requests.get(url, params).json()
 
     def send_message(self, chat_id: Union[str, int], text: str) -> dict:
-        self.call("sendMessage", params=dict(
+        return self.call("sendMessage", params=dict(
             chat_id=chat_id, text=text, parse_mode="Markdown", disable_web_page_preview=True
         ))
 

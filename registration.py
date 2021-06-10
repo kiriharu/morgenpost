@@ -2,6 +2,7 @@ import typing
 from enum import Enum
 
 from api.telegram import Telegram
+from api.vkontakte import Vkontakte
 
 T = typing.TypeVar("T")
 
@@ -33,7 +34,9 @@ class Registration:
             self.chat_ids = chat_ids
 
         elif self.type_net == Registration.NetType.VK:
-            pass
+            self.net = Vkontakte(token)
+            self.chat_ids = chat_ids
+
         elif self.type_net == Registration.NetType.Discord:
             pass
 
