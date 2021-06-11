@@ -1,8 +1,10 @@
 import requests
 from typing import Union, List
+from api.social_nets.interfaces import ISocialNet
+from abc import ABC
 
 
-class Telegram:
+class Telegram(ISocialNet, ABC):
     api_url = "https://api.telegram.org"
 
     def __init__(self, token: str):

@@ -4,7 +4,7 @@ from decimal import Decimal, ROUND_HALF_UP
 from typing import List
 import requests
 
-from service.interfaces import IApi
+from api.service_apis.interfaces import IApi
 
 
 class BlockchainConfig:

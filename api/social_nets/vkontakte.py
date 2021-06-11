@@ -1,9 +1,11 @@
 import requests
 from typing import Union, List
 from random import randint
+from abc import ABC
+from api.social_nets.interfaces import ISocialNet
 
 
-class Vkontakte:
+class Vkontakte(ISocialNet, ABC):
     api_url = "https://api.vk.com/method/"
 
     def __init__(self, token: str):

@@ -3,7 +3,7 @@ from typing import List
 import requests
 from dataclasses import dataclass
 
-from service.interfaces import IApi
+from api.service_apis.interfaces import IApi
 
 
 class Covid19Config:

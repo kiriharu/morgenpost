@@ -4,7 +4,7 @@ import requests
 from dataclasses import dataclass
 from decimal import Decimal
 
-from service.interfaces import IApi
+from api.service_apis.interfaces import IApi
 
 
 class CBRConfig:

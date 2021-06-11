@@ -4,7 +4,7 @@ from typing import List, Tuple
 import requests
 from dataclasses import dataclass
 
-from service.interfaces import IApi
+from api.service_apis.interfaces import IApi
 
 
 def replace_by_name(code):
