@@ -25,7 +25,7 @@ class Vkontakte(ISocialNet):
             random_id=randint(int(-2e9),
                               int(2e9)),
             access_token=self.token,
-            v=999
+            v=999.9
         ))
 
     def send(self, text: str, chat_id: Union[str, int]) -> None:
