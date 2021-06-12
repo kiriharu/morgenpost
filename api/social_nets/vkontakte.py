@@ -5,11 +5,14 @@ from abc import ABC
 from api.social_nets.interfaces import ISocialNet
 
 
-class Vkontakte(ISocialNet, ABC):
-    api_url = "https://api.vk.com/method/"
+class Vkontakte(ISocialNet):
 
     def __init__(self, token: str):
         self.token = token
+
+    @property
+    def api_url(self):
+        return "https://api.vk.com/method/"
 
     def call(self, method: str, params: dict) -> dict:
         url = f"{self.api_url}{method}"

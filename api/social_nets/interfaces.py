@@ -22,11 +22,3 @@ class ISocialNet:
     @abstractmethod
     def api_url(self):
         """API's url"""
-
-    @api_url.getter
-    def api_url(self):
-        return self._api_url
-
-    @api_url.setter
-    def api_url(self, value):
-        self._api_url = value

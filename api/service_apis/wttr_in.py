@@ -35,11 +35,17 @@ class WttrInInfo:
                f"☁{self.cloudcover}\n"
 
 
-class WttrIn(IApi, ABC):
+class WttrIn(IApi):
     def __init__(self, config: WttrInConfig):
-        self.header = "☀️Погода сейчас: \n\n"
         self.cities = config.locations
-        self.url = f"https://wttr.in/"
+
+    @property
+    def url(self):
+        return "https://wttr.in/"
+
+    @property
+    def header(self):
+        return "☀️Погода сейчас: \n\n"
 
     def get(self) -> str:
         message = self.header

@@ -22,11 +22,17 @@ class CbrValutesInfo:
         return f"💰 За {self.nominal}{self.valute} дают {self.value}RUB\n"
 
 
-class CbrValutes(IApi, ABC):
+class CbrValutes(IApi):
     def __init__(self, config: CBRConfig):
-        self.header = "🏦Курс валют ЦБР: \n\n"
         self.valutes: List[str] = config.cross_rates
-        self.url = "https://www.cbr-xml-daily.ru/daily_json.js"
+
+    @property
+    def url(self):
+        return "https://www.cbr-xml-daily.ru/daily_json.js"
+
+    @property
+    def header(self):
+        return "🏦Курс валют ЦБР: \n\n"
 
     def get(self) -> str:
         result = (requests.get(self.url).json())["Valute"]

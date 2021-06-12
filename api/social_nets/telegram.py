@@ -4,11 +4,14 @@ from api.social_nets.interfaces import ISocialNet
 from abc import ABC
 
 
-class Telegram(ISocialNet, ABC):
-    api_url = "https://api.telegram.org"
+class Telegram(ISocialNet):
 
     def __init__(self, token: str):
         self.token = token
+
+    @property
+    def api_url(self):
+        return "https://api.telegram.org"
 
     def call(self, method: str, params: dict) -> dict:
         url = f"{self.api_url}/bot{self.token}/{method}"

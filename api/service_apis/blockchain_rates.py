@@ -21,11 +21,17 @@ class BlockchainRatesInfo:
         return f"💰 За 1{self.symbol} дают {self.price}USD\n"
 
 
-class BlockchainRates(IApi, ABC):
+class BlockchainRates(IApi):
     def __init__(self, config: BlockchainConfig):
-        self.header = "🏦Курс криптовалют: \n\n"
         self.symbols = config.blockchain_rates
-        self.url: str = f"http://api.coincap.io/v2/assets"
+
+    @property
+    def url(self):
+        return "http://api.coincap.io/v2/assets"
+
+    @property
+    def header(self):
+        return "🏦Курс криптовалют: \n\n"
 
     def get(self) -> str:
         result = (requests.get(self.url).json())["data"]

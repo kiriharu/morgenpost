@@ -38,10 +38,9 @@ class Covid19Info:
                    f"😷{self.cases}\n\n"
 
 
-class Covid19(IApi, ABC):
+class Covid19(IApi):
 
     def __init__(self, config: Covid19Config):
-        self.header = "🦠Статистика по коронавирусу: \n\n"
         self.countries = config.countries
 
         if (config.mode == "") or (config.mode != "SHORT" and config.mode != "EXTENDED"):
@@ -49,7 +48,13 @@ class Covid19(IApi, ABC):
         else:
             self.mode = config.mode
 
-        self.url = "https://coronavirus-19-api.herokuapp.com/countries/"
+    @property
+    def url(self):
+        return "https://coronavirus-19-api.herokuapp.com/countries/"
+
+    @property
+    def header(self):
+        return "🦠Статистика по коронавирусу: \n\n"
 
     def get(self) -> str:
         message = ""

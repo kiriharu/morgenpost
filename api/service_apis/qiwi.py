@@ -32,11 +32,9 @@ class CrossRate:
         return f"💰 За 1 {replace_by_name(self.to)} дают {replace_by_name(self.from_e)} {self.rate}\n"
 
 
-class Qiwi(IApi, ABC):
-    url = "https://edge.qiwi.com"
+class Qiwi(IApi):
 
     def __init__(self, config: QiwiConfig):
-        self.header = "🥝Курс в обменнике Qiwi: \n\n"
         self.valutes = config.cross_rates
         self.session = requests.Session()
         self.session.headers = {
@@ -44,6 +42,14 @@ class Qiwi(IApi, ABC):
             "content-type": "application/json",
             "Accept": "application/json"
         }
+
+    @property
+    def url(self):
+        return "https://edge.qiwi.com"
+
+    @property
+    def header(self):
+        return "🥝Курс в обменнике Qiwi: \n\n"
 
     def call(self, method: str) -> dict:
         result = self.session.get(f"{self.url}{method}")

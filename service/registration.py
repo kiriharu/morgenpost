@@ -65,6 +65,6 @@ class SocialNet:
             self.net = Vkontakte(token)
 
         elif self.type_net == SocialNetType.Discord:
-            pass
+            raise NotImplemented("This social network is currently not supported")
 
         return self
