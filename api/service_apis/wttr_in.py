@@ -4,7 +4,12 @@ from typing import List
 
 import requests
 
-from .interfaces import IApi
+from api.service_apis.interfaces import IApi
+
+
+class WttrInConfig:
+    def __init__(self, locations: List[str]):
+        self.locations = locations
 
 
 @dataclass
@@ -30,11 +35,17 @@ class WttrInInfo:
                f"☁{self.cloudcover}\n"
 
 
-class WttrIn(IApi, ABC):
-    def __init__(self, cities: List[str]):
-        self.header = "☀️Погода сейчас: \n\n"
-        self.cities = cities
-        self.url = f"https://wttr.in/"
+class WttrIn(IApi):
+    def __init__(self, config: WttrInConfig):
+        self.cities = config.locations
+
+    @property
+    def url(self):
+        return "https://wttr.in/"
+
+    @property
+    def header(self):
+        return "☀️Погода сейчас: \n\n"
 
     def get(self) -> str:
         message = self.header

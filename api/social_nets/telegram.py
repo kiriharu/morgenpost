@@ -1,19 +1,24 @@
 import requests
 from typing import Union, List
+from api.social_nets.interfaces import ISocialNet
+from abc import ABC
 
 
-class Telegram:
-    api_url = "https://api.telegram.org"
+class Telegram(ISocialNet):
 
     def __init__(self, token: str):
         self.token = token
+
+    @property
+    def api_url(self):
+        return "https://api.telegram.org"
 
     def call(self, method: str, params: dict) -> dict:
         url = f"{self.api_url}/bot{self.token}/{method}"
         return requests.get(url, params).json()
 
     def send_message(self, chat_id: Union[str, int], text: str) -> dict:
-        self.call("sendMessage", params=dict(
+        return self.call("sendMessage", params=dict(
             chat_id=chat_id, text=text, parse_mode="Markdown", disable_web_page_preview=True
         ))
 

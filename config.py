@@ -1,8 +1,16 @@
 import os
 import json
+import typing
 
 from dotenv import load_dotenv
 
+from api.service_apis.blockchain_rates import BlockchainConfig
+from api.service_apis.cbr_valutes import CBRConfig
+from api.service_apis.covid19 import Covid19Config
+from api.service_apis.qiwi import QiwiConfig
+from api.service_apis.rss import RSSConfig
+from api.service_apis.weatherstack import WeatherStackConfig
+from api.service_apis.wttr_in import WttrInConfig
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 if os.path.exists(dotenv_path):
@@ -52,3 +60,11 @@ RSS_FEEDS = [
     ("Новости с Яндекса", "https://news.yandex.ru/world.rss"),
     ("Новости с Opennet", "https://www.opennet.ru/opennews/opennews_all_utf.rss"),
 ]
+
+weatherstack_config = WeatherStackConfig(token=WEATHERSTACK_API_KEY, locations=WEATHERSTACK_LOCATIONS)
+wttrin_config = WttrInConfig(locations=WTTRIN_LOCATIONS)
+qiwi_config = QiwiConfig(token=QIWI_TOKEN, cross_rates=QIWI_CROSS_RATES)
+cbr_config = CBRConfig(CBR_CROSS_RATES)
+blockchain_config = BlockchainConfig(BLOCKCHAIN_RATES)
+covid19_config = Covid19Config(countries=COVID_COUNTRIES, mode=COVID_MODE)
+rss_config = RSSConfig(max_entries=RSS_MAX_ENTRIES, feeds=RSS_FEEDS)

@@ -1,10 +1,10 @@
 from abc import ABC
-from typing import List
+from typing import List, Tuple
 
 import requests
 from dataclasses import dataclass
 
-from .interfaces import IApi
+from api.service_apis.interfaces import IApi
 
 
 def replace_by_name(code):
@@ -14,6 +14,12 @@ def replace_by_name(code):
         return "EUR"
     if code == "840":
         return "USD"
+
+
+class QiwiConfig:
+    def __init__(self, token: str, cross_rates: List[Tuple[str, str]]):
+        self.token = token
+        self.cross_rates = cross_rates
 
 
 @dataclass
@@ -26,18 +32,24 @@ class CrossRate:
         return f"💰 За 1 {replace_by_name(self.to)} дают {replace_by_name(self.from_e)} {self.rate}\n"
 
 
-class Qiwi(IApi, ABC):
-    url = "https://edge.qiwi.com"
+class Qiwi(IApi):
 
-    def __init__(self, api_token: str, valutes: List[str]):
-        self.header = "🥝Курс в обменнике Qiwi: \n\n"
-        self.valutes = valutes
+    def __init__(self, config: QiwiConfig):
+        self.valutes = config.cross_rates
         self.session = requests.Session()
         self.session.headers = {
-            "authorization": f"Bearer {api_token}",
+            "authorization": f"Bearer {config.token}",
             "content-type": "application/json",
             "Accept": "application/json"
         }
+
+    @property
+    def url(self):
+        return "https://edge.qiwi.com"
+
+    @property
+    def header(self):
+        return "🥝Курс в обменнике Qiwi: \n\n"
 
     def call(self, method: str) -> dict:
         result = self.session.get(f"{self.url}{method}")

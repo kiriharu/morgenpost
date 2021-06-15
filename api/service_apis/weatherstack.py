@@ -4,7 +4,14 @@ from typing import List
 import requests
 from dataclasses import dataclass
 
-from .interfaces import IApi
+from api.service_apis.interfaces import IApi
+
+
+class WeatherStackConfig:
+    def __init__(self, token: str, locations: List[str]):
+        self.token = token
+        self.locations = locations
+
 
 @dataclass
 class WeatherBasicInfo:
@@ -22,13 +29,19 @@ class WeatherBasicInfo:
                f"💨{self.wind_speed}, 💧{self.humidity}%, ⬇️ {self.pressure}\n"
 
 
-class WeatherStack(IApi, ABC):
-    url = "http://api.weatherstack.com/current"
+class WeatherStack(IApi):
 
-    def __init__(self, access_key: str, locations: List[str]):
-        self.header = "☀️Погода сейчас: \n\n"
-        self.locations = locations
-        self.access_key = access_key
+    def __init__(self, config: WeatherStackConfig):
+        self.locations = config.locations
+        self.access_key = config.token
+
+    @property
+    def url(self):
+        return "http://api.weatherstack.com/current"
+
+    @property
+    def header(self):
+        return "☀️Погода сейчас: \n\n"
 
     def call(self, params: dict) -> dict:
         params["access_key"] = self.access_key
