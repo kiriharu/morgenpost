@@ -12,8 +12,10 @@ class IApi:
     @abstractmethod
     def url(self):
         """API's url"""
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def header(self):
-        """API's url"""
+        """API's header"""
+        raise NotImplementedError
