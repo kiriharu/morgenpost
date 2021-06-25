@@ -1,8 +1,7 @@
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import abstractmethod, ABC
 
 
-class IApi:
-    __metaclass__ = ABCMeta
+class IApi(ABC):
 
     @abstractmethod
     def get(self, *args, **kwargs) -> str:
