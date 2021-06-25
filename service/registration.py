@@ -19,12 +19,6 @@ class ApisList:
         else:
             self.work_api: typing.List[ApiType] = apis
 
-    def init_apis(self):
-        for api in self.work_api:
-            self.work_api += api.setup_and_get()
-
-        return self
-
     def add_api(self, api: ApiType):
         self.work_api.append(api)
         return self
