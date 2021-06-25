@@ -3,9 +3,8 @@ from enum import Enum
 
 from api.social_nets.telegram import Telegram as Tg
 from api.social_nets.vkontakte import Vkontakte as Vk
-from service.exceptions import SocialNetworkNotFoundException
 
-T = typing.TypeVar("T")
+ApiType = typing.TypeVar("ApiType")
 
 
 class SocialNetType(Enum):
@@ -14,11 +13,11 @@ class SocialNetType(Enum):
 
 
 class ApisList:
-    def __init__(self, apis: typing.Optional[typing.List[T]] = None):
+    def __init__(self, apis: typing.Optional[typing.List[ApiType]] = None):
         if apis is None:
             self.work_api = []
         else:
-            self.work_api: typing.List[T] = apis
+            self.work_api: typing.List[ApiType] = apis
 
     def init_apis(self):
         for api in self.work_api:
@@ -26,7 +25,7 @@ class ApisList:
 
         return self
 
-    def add_api(self, api: T):
+    def add_api(self, api: ApiType):
         self.work_api.append(api)
         return self
 
@@ -40,23 +39,3 @@ class ApisList:
             message += "Новостей на сегодня нет, ибо список сервисов пуст!"
 
         return message
-
-
-class SocialNet:
-    def __init__(self, type_net: SocialNetType, token: typing.Optional[str] = None):
-        self.type_net: SocialNetType = type_net
-        if token is not None:
-            self.init_net(token)
-        else:
-            self.net: T = None
-
-    def send(self, message, chat_ids):
-        for chat_id in chat_ids:
-            self.net.send(message, chat_id)
-
-    def init_net(self, token: str):
-        try:
-            self.net = self.type_net.value(token)
-        except TypeError:
-            raise SocialNetworkNotFoundException("Вы указали несуществующую в программе социальную сеть!")
-        return self
