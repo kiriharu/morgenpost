@@ -6,6 +6,7 @@ class IApi(ABC):
     @abstractmethod
     def get(self, *args, **kwargs) -> str:
         """Get info from API"""
+        raise NotImplementedError
 
     @property
     @abstractmethod
