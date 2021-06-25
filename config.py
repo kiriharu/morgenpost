@@ -21,6 +21,11 @@ TELEGRAM_API_TOKEN = os.getenv("TELEGRAM_API_TOKEN")
 # ID или юзернеймы (но лучше ID) пользователей телеги, которым посылается сводка
 TELEGRAM_USERS_ID = json.loads(os.getenv("TELEGRAM_USERS_ID"))
 
+# Юзер токен от ВК
+VK_API_TOKEN = os.getenv("VK_API_TOKEN")
+# ID пользователей ВК, которым посылается сводка
+VK_USERS_ID = json.loads(os.getenv("VK_USERS_ID"))
+
 # Стартовое сообщение
 STARTING_MESSAGE = "Доброе утро! Вот тебе сводка данных с утра: \n\n"
 
