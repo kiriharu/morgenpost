@@ -1,16 +1,16 @@
 import typing
 from enum import Enum
 
-from api.social_nets.telegram import Telegram
-from api.social_nets.vkontakte import Vkontakte
+from api.social_nets.telegram import Telegram as Tg
+from api.social_nets.vkontakte import Vkontakte as Vk
+from service.exceptions import SocialNetworkNotFoundException
 
 T = typing.TypeVar("T")
 
 
 class SocialNetType(Enum):
-    Telegram = 0
-    VK = 1
-    Discord = 2
+    Telegram = Tg
+    Vkontakte = Vk
 
 
 class ApisList:
@@ -30,9 +30,6 @@ class ApisList:
         self.work_api.append(api)
         return self
 
-    def get_str(self):
-        return self.__str__()
-
     def __str__(self):
         message = ""
         if self.work_api:
@@ -47,7 +44,7 @@ class ApisList:
 
 class SocialNet:
     def __init__(self, type_net: SocialNetType, token: typing.Optional[str] = None):
-        self.type_net: SocialNet.NetType = type_net
+        self.type_net: SocialNetType = type_net
         if token is not None:
             self.init_net(token)
         else:
@@ -58,13 +55,8 @@ class SocialNet:
             self.net.send(message, chat_id)
 
     def init_net(self, token: str):
-        if self.type_net == SocialNetType.Telegram:
-            self.net = Telegram(token)
-
-        elif self.type_net == SocialNetType.VK:
-            self.net = Vkontakte(token)
-
-        elif self.type_net == SocialNetType.Discord:
-            raise NotImplemented("This social network is currently not supported")
-
+        try:
+            self.net = self.type_net.value(token)
+        except TypeError:
+            raise SocialNetworkNotFoundException("Вы указали несуществующую в программе социальную сеть!")
         return self

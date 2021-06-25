@@ -20,7 +20,7 @@ if __name__ == "__main__":
     apis.add_api(covid19.Covid19(covid19_config))
     apis.add_api(rss.RSS(rss_config))
 
-    message = f"{STARTING_MESSAGE}{apis.get_str()}"
+    message = f"{STARTING_MESSAGE}{apis}"
 
     social_net = SocialNet(SocialNetType.Telegram, TELEGRAM_API_TOKEN)
     social_net.send(message, TELEGRAM_USERS_ID)

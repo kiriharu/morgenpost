@@ -1,0 +1,2 @@
+class SocialNetworkNotFoundException(Exception):
+    pass
