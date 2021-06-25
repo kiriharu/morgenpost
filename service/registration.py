@@ -1,10 +1,9 @@
 import typing
 from enum import Enum
 
+from api.service_apis.interfaces import IApi
 from api.social_nets.telegram import Telegram as Tg
 from api.social_nets.vkontakte import Vkontakte as Vk
-
-ApiType = typing.TypeVar("ApiType")
 
 
 class SocialNetType(Enum):
@@ -13,13 +12,13 @@ class SocialNetType(Enum):
 
 
 class ApisList:
-    def __init__(self, apis: typing.Optional[typing.List[ApiType]] = None):
+    def __init__(self, apis: typing.Optional[typing.List[IApi]] = None):
         if apis is None:
             self.work_api = []
         else:
-            self.work_api: typing.List[ApiType] = apis
+            self.work_api: typing.List[IApi] = apis
 
-    def add_api(self, api: ApiType):
+    def add_api(self, api: IApi):
         self.work_api.append(api)
         return self
 
