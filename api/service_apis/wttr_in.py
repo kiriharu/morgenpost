@@ -4,12 +4,7 @@ from typing import List
 
 import requests
 
-from api.service_apis.interfaces import IApi
-
-
-class WttrInConfig:
-    def __init__(self, locations: List[str]):
-        self.locations = locations
+from api.service_apis.interfaces import IApi, IConfig
 
 
 @dataclass
@@ -36,7 +31,7 @@ class WttrInInfo:
 
 
 class WttrIn(IApi):
-    def __init__(self, config: WttrInConfig):
+    def __init__(self, config: "WttrInConfig"):
         self.cities = config.locations
 
     @property
@@ -65,3 +60,10 @@ class WttrIn(IApi):
             ))
         message += "\n"
         return message
+
+
+class WttrInConfig(IConfig):
+    base_class = WttrIn
+
+    def __init__(self, locations: List[str]):
+        self.locations = locations

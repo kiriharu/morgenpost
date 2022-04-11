@@ -19,3 +19,11 @@ class IApi(ABC):
     def header(self):
         """API's header"""
         raise NotImplementedError
+
+
+class IConfig(ABC):
+
+    @property
+    @abstractmethod
+    def base_class(self):
+        """Base class for current config object"""
