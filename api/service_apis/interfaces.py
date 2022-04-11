@@ -1,12 +1,12 @@
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import abstractmethod, ABC
 
 
-class IApi:
-    __metaclass__ = ABCMeta
+class IApi(ABC):
 
     @abstractmethod
     def get(self, *args, **kwargs) -> str:
         """Get info from API"""
+        raise NotImplementedError
 
     @property
     @abstractmethod
@@ -19,3 +19,11 @@ class IApi:
     def header(self):
         """API's header"""
         raise NotImplementedError
+
+
+class IConfig(ABC):
+
+    @property
+    @abstractmethod
+    def base_class(self):
+        """Base class for current config object"""

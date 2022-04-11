@@ -4,11 +4,7 @@ import feedparser
 import requests
 from dataclasses import dataclass
 
-
-class RSSConfig:
-    def __init__(self, max_entries: int, feeds: List[Tuple[str, str]]):
-        self.max_entries = max_entries
-        self.feeds = feeds
+from api.service_apis.interfaces import IApi, IConfig
 
 
 @dataclass
@@ -44,17 +40,35 @@ class Feed:
         return feed_message
 
 
-class RSS:
+class RSS(IApi):
 
-    def __init__(self, config: RSSConfig):
+    @property
+    def url(self):
+        return "\n".join(["\n".join([link for link in feed]) for feed in self.feeds])
+
+    @property
+    def header(self):
+        return "Сводки новостей с RSS:"
+
+    def __init__(self, config: "RSSConfig"):
         self.feeds = config.feeds
         self.max_entries = config.max_entries
 
     def get(self):
-        rss_message = ""
+        rss_message = "Сводка с RSS пуста!"
         if self.max_entries > 0 and len(self.feeds) > 0:
+            rss_message = self.header + '\n'
             for feed in self.feeds:
                 rss_message += Feed(feed[0], feed[1], self.max_entries).get()
 
             rss_message += "\n"
+
         return rss_message
+
+
+class RSSConfig(IConfig):
+    base_class = RSS
+
+    def __init__(self, max_entries: int, feeds: List[Tuple[str, str]]):
+        self.max_entries = max_entries
+        self.feeds = feeds

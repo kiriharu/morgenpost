@@ -1,19 +1,13 @@
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import abstractmethod, ABC
 
 from typing import Union
 
 
-class ISocialNet:
-    __metaclass__ = ABCMeta
+class ISocialNet(ABC):
 
     @abstractmethod
     def call(self, method: str, params: dict) -> dict:
         """Call API method"""
-        raise NotImplementedError
-
-    @abstractmethod
-    def send_message(self, chat_id: Union[str, int], text: str) -> dict:
-        """Send message to chat"""
         raise NotImplementedError
 
     @abstractmethod

@@ -1,7 +1,6 @@
 import requests
 from typing import Union, List
 from random import randint
-from abc import ABC
 from api.social_nets.interfaces import ISocialNet
 
 
@@ -28,5 +27,6 @@ class Vkontakte(ISocialNet):
             v=999.9
         ))
 
-    def send(self, text: str, chat_id: Union[str, int]) -> None:
-        self.send_message(chat_id, text)
+    def send(self, text: str, chat_ids: List[Union[str, int]]) -> None:
+        for chat_id in chat_ids:
+            self.send_message(chat_id, text)
