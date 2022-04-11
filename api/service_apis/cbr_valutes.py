@@ -4,12 +4,7 @@ import requests
 from dataclasses import dataclass
 from decimal import Decimal
 
-from api.service_apis.interfaces import IApi
-
-
-class CBRConfig:
-    def __init__(self, cross_rates: List[str]):
-        self.cross_rates = cross_rates
+from api.service_apis.interfaces import IApi, IConfig
 
 
 @dataclass
@@ -23,7 +18,7 @@ class CbrValutesInfo:
 
 
 class CbrValutes(IApi):
-    def __init__(self, config: CBRConfig):
+    def __init__(self, config: "CBRConfig"):
         self.valutes: List[str] = config.cross_rates
 
     @property
@@ -49,3 +44,10 @@ class CbrValutes(IApi):
 
         message += "\n"
         return message
+
+
+class CBRConfig(IConfig):
+    base_class = CbrValutes
+
+    def __init__(self, cross_rates: List[str]):
+        self.cross_rates = cross_rates

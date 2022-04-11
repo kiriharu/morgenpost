@@ -4,12 +4,7 @@ from decimal import Decimal, ROUND_HALF_UP
 from typing import List
 import requests
 
-from api.service_apis.interfaces import IApi
-
-
-class BlockchainConfig:
-    def __init__(self, blockchain_rates: List[str]):
-        self.blockchain_rates = blockchain_rates
+from api.service_apis.interfaces import IApi, IConfig
 
 
 @dataclass
@@ -46,3 +41,10 @@ class BlockchainRates(IApi):
                 ))
         message += "\n"
         return message
+
+
+class BlockchainConfig(IConfig):
+    base_class = BlockchainRates
+
+    def __init__(self, blockchain_rates: List[str]):
+        self.blockchain_rates = blockchain_rates

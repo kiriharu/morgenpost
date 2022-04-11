@@ -4,7 +4,7 @@ from typing import List, Tuple
 import requests
 from dataclasses import dataclass
 
-from api.service_apis.interfaces import IApi
+from api.service_apis.interfaces import IApi, IConfig
 
 
 def replace_by_name(code):
@@ -14,12 +14,6 @@ def replace_by_name(code):
         return "EUR"
     if code == "840":
         return "USD"
-
-
-class QiwiConfig:
-    def __init__(self, token: str, cross_rates: List[Tuple[str, str]]):
-        self.token = token
-        self.cross_rates = cross_rates
 
 
 @dataclass
@@ -34,7 +28,7 @@ class CrossRate:
 
 class Qiwi(IApi):
 
-    def __init__(self, config: QiwiConfig):
+    def __init__(self, config: "QiwiConfig"):
         self.valutes = config.cross_rates
         self.session = requests.Session()
         self.session.headers = {
@@ -74,3 +68,11 @@ class Qiwi(IApi):
             ))
         message += "\n"
         return message
+
+
+class QiwiConfig(IConfig):
+    base_class = Qiwi
+
+    def __init__(self, token: str, cross_rates: List[Tuple[str, str]]):
+        self.token = token
+        self.cross_rates = cross_rates

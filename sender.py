@@ -15,21 +15,14 @@ from service.registration import ApisList
 if __name__ == "__main__":
 
     apis = ApisList()
+    configs = [weatherstack_config,
+               wttrin_config, qiwi_config,
+               cbr_config, blockchain_config,
+               covid19_config, rss_config]
 
-    if weatherstack_config:
-        apis.add_api(weatherstack.WeatherStack(weatherstack_config))
-    if wttrin_config:
-        apis.add_api(wttr_in.WttrIn(wttrin_config))
-    if qiwi_config:
-        apis.add_api(qiwi.Qiwi(qiwi_config))
-    if cbr_config:
-        apis.add_api(cbr_valutes.CbrValutes(cbr_config))
-    if blockchain_config:
-        apis.add_api(blockchain_rates.BlockchainRates(blockchain_config))
-    if covid19_config:
-        apis.add_api(covid19.Covid19(covid19_config))
-    if rss_config:
-        apis.add_api(rss.RSS(rss_config))
+    for config in configs:
+        if config:
+            apis.add_api(config.base_class(config))
 
     message = f"{STARTING_MESSAGE}{apis}"
 

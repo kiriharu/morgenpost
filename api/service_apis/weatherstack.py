@@ -4,13 +4,7 @@ from typing import List
 import requests
 from dataclasses import dataclass
 
-from api.service_apis.interfaces import IApi
-
-
-class WeatherStackConfig:
-    def __init__(self, token: str, locations: List[str]):
-        self.token = token
-        self.locations = locations
+from api.service_apis.interfaces import IApi, IConfig
 
 
 @dataclass
@@ -31,7 +25,7 @@ class WeatherBasicInfo:
 
 class WeatherStack(IApi):
 
-    def __init__(self, config: WeatherStackConfig):
+    def __init__(self, config: "WeatherStackConfig"):
         self.locations = config.locations
         self.access_key = config.token
 
@@ -75,3 +69,11 @@ class WeatherStack(IApi):
 
         message += "\n"
         return message
+
+
+class WeatherStackConfig(IConfig):
+    base_class = WeatherStack
+
+    def __init__(self, token: str, locations: List[str]):
+        self.token = token
+        self.locations = locations

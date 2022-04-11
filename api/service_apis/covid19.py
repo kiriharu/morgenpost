@@ -3,13 +3,7 @@ from typing import List
 import requests
 from dataclasses import dataclass
 
-from api.service_apis.interfaces import IApi
-
-
-class Covid19Config:
-    def __init__(self, countries: List[str], mode: str):
-        self.countries = countries
-        self.mode = mode
+from api.service_apis.interfaces import IApi, IConfig
 
 
 @dataclass
@@ -40,7 +34,7 @@ class Covid19Info:
 
 class Covid19(IApi):
 
-    def __init__(self, config: Covid19Config):
+    def __init__(self, config: "Covid19Config"):
         self.countries = config.countries
 
         if (config.mode == "") or (config.mode != "SHORT" and config.mode != "EXTENDED"):
@@ -90,3 +84,11 @@ class Covid19(IApi):
 
         message += "\n"
         return message
+
+
+class Covid19Config(IConfig):
+    base_class = Covid19
+
+    def __init__(self, countries: List[str], mode: str):
+        self.countries = countries
+        self.mode = mode
